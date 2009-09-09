@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "bin/docapi",
+     "docapi.gemspec",
      "files/javascripts/documentation/highlight.pack.js",
      "files/stylesheets/documentation/highlighter/ascetic.css",
      "files/stylesheets/documentation/highlighter/brown_paper.css",
