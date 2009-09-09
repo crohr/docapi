@@ -15,7 +15,7 @@ require 'docapi'
 
 @options = {}
 option_parser = OptionParser.new do |opts|
-  opts.banner = "Usage: docapi command input"
+  opts.banner = "Usage: docapi [generate|merge] [input]"
   
   opts.on("-o", "--output=", "Output directory") do |o|
     @options[:output] = o
