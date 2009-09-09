@@ -1,23 +1,4 @@
-#!/usr/bin/ruby
-
-if ARGV.size == 1 and ARGV.first == '-h'
-  puts <<-HELP
-DocApi -- RDoc template for REST API documentation.
-Synopsis:
-  docapi [options]  [file names...]
-  
-Example usage:
-
-  docapi lib/**/*.rb
-
-DocApi passes all arguments to RDoc. To find more about RDoc options, see
-"rdoc -h". Default options are:
-
-  -o doc --inline-source --charset=UTF-8
-  
-HELP
-  exit 0
-end
+#!/usr/bin/env ruby
 
 unless RUBY_PLATFORM =~ /(:?mswin|mingw)/
   require 'pathname'
@@ -29,18 +10,38 @@ end
 
 $:.unshift(lib_dir) unless $:.include?(lib_dir)
 
-require 'rubygems'
-require 'docapi/rdoc_version'
-Docapi::require_rdoc
-require 'rdoc/rdoc'
+require 'optparse'
+require 'docapi'
 
-options = []
+@options = {}
+option_parser = OptionParser.new do |opts|
+  opts.banner = "Usage: docapi command input"
+  
+  opts.on("-o", "--output=", "Output directory") do |o|
+    @options[:output] = o
+  end
+  opts.on("-t", "--title=", "Documentation title") do |o|
+    @options[:title] = o
+  end
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+  
+end
 
-options << '-f' << 'html' << '-T' << 'docapi'
-options << '--inline-source' << '--charset=UTF-8'
+option_parser.parse!
 
-options << '-o' << 'doc' unless ARGV.include?('-o') or ARGV.include?('--op')
-options.concat ARGV
+@command =  ARGV.shift
 
-RDoc::RDoc.new.document(options)
 
+
+case @command
+when 'generate'
+  Docapi.new.generate(input = ARGV, output = @options.delete(:output), @options)
+when 'merge'
+  Docapi.new.merge(input = ARGV.shift, output = @options.delete(:output), @options)
+else
+  $stderr.puts option_parser.help  
+  exit(-1)
+end

@@ -1,0 +1,186 @@
+<ol class="methods"><li>
+
+<div class="synopsis"><a name="M000003">GET /:grid5000-resource[.:format]<a></div>
+
+
+
+
+<p>
+Get a specific version of a Grid5000 resource.
+</p>
+<h2>URI parameters</h2>
+<table>
+<tr><td valign="top"><tt>grid5000-resource</tt>:</td><td>the URI of the grid5000 resource.
+
+</td></tr>
+</table>
+<h2>Query parameters</h2>
+<table>
+<tr><td valign="top"><tt>version</tt>:</td><td>the requested version. It can be a version id (40 characters), or a UNIX
+timestamp [default=empty (most recent version is used)].
+
+</td></tr>
+<tr><td valign="top"><tt>depth</tt>:</td><td>the number of nested sub-resources to resolve [default=1].
+
+</td></tr>
+<tr><td valign="top"><tt>resolve</tt>:</td><td>a list of comma separated sub-resources names to resolve (to be used with
+the <tt>depth</tt> parameter) [default=all].
+
+</td></tr>
+</table>
+<h2>Content-Types</h2>
+<table>
+<tr><td valign="top"><tt>application/json</tt>:</td><td>JSON
+
+</td></tr>
+<tr><td valign="top"><tt>application/xml</tt>:</td><td>XML
+
+</td></tr>
+<tr><td valign="top"><tt>application/zip</tt>:</td><td>the ZIP format will return a zip archive containing the set of directories
+and files corresponding to the required data, with all its sub-resources.
+
+</td></tr>
+</table>
+<h2>Status codes</h2>
+<table>
+<tr><td valign="top"><tt>200</tt>:</td><td>OK, the response contains the description of the resource as it was at the
+requested version.
+
+</td></tr>
+<tr><td valign="top"><tt>404</tt>:</td><td>the requested grid5000 resource cannot be found, or the requested version
+does not exist.
+
+</td></tr>
+<tr><td valign="top"><tt>406</tt>:</td><td>Returns 406 if the requested format is not available.
+
+</td></tr>
+</table>
+
+
+
+</li><li>
+
+<div class="synopsis"><a name="M000001">GET /:grid5000-resource/versions[.:format]<a></div>
+
+
+
+
+<p>
+Get the list of all versions of a particular resource.
+</p>
+<h2>URI parameters</h2>
+<table>
+<tr><td valign="top"><tt>grid5000-resource</tt>:</td><td>the URI of the grid5000 resource.
+
+</td></tr>
+<tr><td valign="top"><tt>format</tt>:</td><td>the requested format [json,xml] if you do not use the <tt>Accept</tt>
+header in your HTTP request.
+
+</td></tr>
+</table>
+<h2>Query parameters</h2>
+<table>
+<tr><td valign="top"><tt>limit</tt>:</td><td>maximum number of versions to return.
+
+</td></tr>
+</table>
+<h2>Content-Types</h2>
+<table>
+<tr><td valign="top"><tt>application/json</tt>:</td><td>JSON
+
+</td></tr>
+<tr><td valign="top"><tt>application/xml</tt>:</td><td>XML
+
+</td></tr>
+</table>
+<h2>Status codes</h2>
+<table>
+<tr><td valign="top"><tt>200</tt>:</td><td>OK, the response contains the list of the versions of the requested
+grid5000 resource.
+
+</td></tr>
+<tr><td valign="top"><tt>404</tt>:</td><td>the requested grid5000 resource cannot be found.
+
+</td></tr>
+<tr><td valign="top"><tt>406</tt>:</td><td>the requested format is not available.
+
+</td></tr>
+</table>
+<h2>Usage</h2>
+<p>
+Get the 2 latest versions of the Rennes site:
+</p>
+<pre><code>
+    GET /grid5000/sites/rennes/versions?limit=2 HTTP/1.1
+    Accept: application/json
+
+    HTTP/1.1 200 OK
+    Date: Tue, 17 Mar 2009 13:41:45 GMT
+    ETag: &quot;0745dc6351cdd00919e8611f8f6952eb48fc9b56&quot;
+    Cache-Control: public, max-age=120
+    Age: 0
+    Content-Length: 496
+    Content-Type: application/json;charset=utf-8
+    [
+      {
+        &quot;message&quot;: &quot;Added network interfaces to helios and azur clusters.&quot;,
+        &quot;uri&quot;: &quot;\/sites\/versions\/29202872636a3f4023b956cc7bba38c15850ec9f&quot;,
+        &quot;date&quot;: &quot;Tue, 17 Mar 2009 09:28:27 GMT&quot;,
+        &quot;id&quot;: &quot;29202872636a3f4023b956cc7bba38c15850ec9f&quot;
+      },
+      {
+        &quot;message&quot;: &quot;Added network interfaces to genepi nodes.&quot;,
+        &quot;uri&quot;: &quot;\/sites\/versions\/7edfbafddb08beb8251c543c5c96e5d736bf23fa&quot;,
+        &quot;date&quot;: &quot;Tue, 17 Mar 2009 09:17:48 GMT&quot;,
+        &quot;id&quot;: &quot;7edfbafddb08beb8251c543c5c96e5d736bf23fa&quot;
+      }
+    ]
+</code></pre>
+
+
+
+</li><li>
+
+<div class="synopsis"><a name="M000002">GET /:grid5000-resource/versions/:version[.:format]<a></div>
+
+
+
+
+<p>
+Get info about a specific version.
+</p>
+<h2>URI parameters</h2>
+<table>
+<tr><td valign="top"><tt>grid5000-resource</tt>:</td><td>the URI of the grid5000 resource.
+
+</td></tr>
+<tr><td valign="top"><tt>version</tt>:</td><td>the version id (40 characters long) or a UNIX timestamp.
+
+</td></tr>
+</table>
+<h2>Content-Types</h2>
+<table>
+<tr><td valign="top"><tt>application/json</tt>:</td><td>JSON
+
+</td></tr>
+<tr><td valign="top"><tt>application/xml</tt>:</td><td>XML
+
+</td></tr>
+</table>
+<h2>Status codes</h2>
+<table>
+<tr><td valign="top"><tt>200</tt>:</td><td>OK.
+
+</td></tr>
+<tr><td valign="top"><tt>404</tt>:</td><td>the requested grid5000 resource cannot be found, or the requested version
+does not exist.
+
+</td></tr>
+<tr><td valign="top"><tt>406</tt>:</td><td>the requested format is not available.
+
+</td></tr>
+</table>
+
+
+
+</li></ol>

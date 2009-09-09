@@ -1,0 +1,102 @@
+body {
+/*	font-size: 16px;*/
+  color:black;
+  font-family:Lucida Grande,Verdana,Arial,Helvetica,sans-serif;
+  font-size:90%;
+}
+h1 {
+  border-bottom: 1px solid #eee;
+  color:#0E3062;
+  font-size:1.8em;
+  margin:0.8em 0 0.3em;
+}
+h2 {
+  font-size: 1.2em;
+  font-family: 'Bitstream Vera Sans Mono', Monaco, monospace, courier, 'courier new';
+}
+pre
+{
+/*  margin: 0 0 10px 0;*/
+/*  padding: 10px;*/
+  font-size: 12px;
+  line-height: 150%;
+  font-family: 'Bitstream Vera Sans Mono', Monaco, monospace, courier, 'courier new';
+  background: #F8F8FF;
+  color: #111;
+/*  border: 1px solid #ddd;*/
+}
+code, tt {
+  overflow: auto;
+  font-family: 'Bitstream Vera Sans Mono', Monaco, monospace, courier, 'courier new';
+  padding: 0 2px;
+  background: #f1f1f1;
+  font-size: .9em;
+  border-bottom: 1px solid #ddd;
+}
+
+pre.hidden:after {
+  content: 'hidden';
+  display: block; text-align: center;
+  font-size: smaller;
+  color: #000; background: white;
+  border-top: solid 1px #ccc;
+  padding-top: 0.5em;
+}
+
+pre code
+{
+  background: transparent;
+}
+
+table.code {
+  width: 100%;
+}
+
+div.code pre {
+  margin: 0;
+}
+p {
+  margin-top: 0px;
+  margin-bottom: 0.5em;
+}
+li > p:first-child:first-line {
+  background-color: #ffffe0;
+  padding: 0px 8px;
+}
+span.replace {
+  color: orange;
+}
+a > span.replace {
+  color: inherit;
+}
+
+p.page-title {
+  color: #880000;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+ol.methods {
+/*  list-style-type: none;*/
+}
+ol.methods .synopsis {
+  padding: 3px 10px;
+  font-size: 1.4em;
+  background: #336699;
+  color: #fff;
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-family: "Courier New";
+}
+ol.methods li {
+  padding: 5px;
+  margin-bottom: 20px;
+}
+ol.methods li h2 {
+  margin:20px 2px 5px 0px;
+  border-left: 5px solid orange;
+  padding-left: 5px;
+}
+table {
+  font-size: 0.8em;
+}

@@ -6,7 +6,7 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "docapi"
     gem.summary = %Q{RDoc template for generating API documentation.}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.description = %Q{RDoc template for generating API documentation.}
     gem.email = "cyril.rohr@gmail.com"
     gem.homepage = "http://github.com/crohr/docapi"
     gem.authors = ["Cyril Rohr"]
