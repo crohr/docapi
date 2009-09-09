@@ -1,0 +1,46 @@
+#!/usr/bin/ruby
+
+if ARGV.size == 1 and ARGV.first == '-h'
+  puts <<-HELP
+DocApi -- RDoc template for REST API documentation.
+Synopsis:
+  docapi [options]  [file names...]
+  
+Example usage:
+
+  docapi lib/**/*.rb
+
+DocApi passes all arguments to RDoc. To find more about RDoc options, see
+"rdoc -h". Default options are:
+
+  -o doc --inline-source --charset=UTF-8
+  
+HELP
+  exit 0
+end
+
+unless RUBY_PLATFORM =~ /(:?mswin|mingw)/
+  require 'pathname'
+  lib_dir = Pathname.new(__FILE__).realpath.dirname + '../lib'
+else
+  # windows
+  lib_dir = File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
+end
+
+$:.unshift(lib_dir) unless $:.include?(lib_dir)
+
+require 'rubygems'
+require 'docapi/rdoc_version'
+Docapi::require_rdoc
+require 'rdoc/rdoc'
+
+options = []
+
+options << '-f' << 'html' << '-T' << 'docapi'
+options << '--inline-source' << '--charset=UTF-8'
+
+options << '-o' << 'doc' unless ARGV.include?('-o') or ARGV.include?('--op')
+options.concat ARGV
+
+RDoc::RDoc.new.document(options)
+
