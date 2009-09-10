@@ -6,7 +6,7 @@ require 'fileutils'
 class Docapi
   
   FILES_TO_INCLUDE = {
-    :javascripts => ["./javascripts/documentation/highlight.pack.js"],
+    :javascripts => ["./javascripts/documentation/highlight.pack.js", "./javascripts/documentation/jquery-1.3.2.min.js", "./javascripts/documentation/jquery.tableofcontents.min.js", "./javascripts/documentation/documentation.js"],
     :stylesheets => ["./stylesheets/documentation/layout.css", "./stylesheets/documentation/syntax.css", "./stylesheets/documentation/highlighter/default.css"]
   }
   
@@ -33,8 +33,8 @@ class Docapi
     dir.entries.each do |entry|
       next if entry.to_s =~ /^\./
       path = dir+entry
-      title = entry.to_s.gsub(/\d+-/, "")
-      output << "<div id='#{title}' class='docapi-section'>"
+      title = File.basename(entry).gsub(/\d+-/, "").gsub(/\..+?$/, "")
+      output << "<div class='docapi-section #{title.downcase}'>"
       if path.directory?
         output << "<h#{level}>#{title.capitalize}</h#{level}>"
         output << convert_directory(path, level+1)
@@ -54,6 +54,8 @@ class Docapi
       process_file_sections(file, 'ruby', [/^=begin (.*)$/, /^=end$/])
     when ".py"
       process_file_sections(file, 'python', [/^''' (.*)$/, /^'''$/])
+    when ".sh"
+      process_file_sections(file, 'bash', [/^<<ENDCOMMENT >\/dev\/null$/, /^ENDCOMMENT$/])
     when ".html"
       File.read(file)
     end
@@ -66,7 +68,7 @@ class Docapi
     File.open(file, "r").each do |line|
       if line =~ regexps.first
         output << write_block(blocks.pop)
-        blocks << {:content => "", :language => $1}
+        blocks << {:content => "", :language => ($1 || "markdown")}
       elsif line =~ regexps.last
         output << write_block(blocks.pop)
       else
@@ -82,7 +84,7 @@ class Docapi
     if block
       case block[:language]
       when "markdown", "text"
-        Maruku.new( block[:content] ).to_html
+        Maruku.new( block[:content] ).to_html.gsub(/<pre class='(.+?)'><code>(.*?)<\/code><\/pre>/m, '<pre><code class="\1">\2</code></pre>')
       else
         '<pre><code class="'+block[:language]+'">'+block[:content]+'</code></pre>'
       end
@@ -130,7 +132,12 @@ class Docapi
     FILES_TO_INCLUDE[:stylesheets].each do |file|
       output << '<link media="screen" type="text/css" href="'+file+'" rel="stylesheet"/>'
     end
-    output << '<script type="text/javascript">hljs.initHighlightingOnLoad();</script>'
+    output << %Q{
+  	<!--[if IE]>
+  	<style type="text/css" media="screen">
+  		body {padding-right: 320px}
+  	</style>
+  	<![endif]-->}
     output << "</head><body>"
   end
   def footer

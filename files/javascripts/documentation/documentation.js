@@ -15,6 +15,12 @@ $(document).ready(function() {
     target.contents().slideDown().parent().removeClass('hidden')
   });
   $(".page-title").after('<ul id="toc"></ul>')
-  $("#toc").tableOfContents();
-
+	$("#toc").tableOfContents(
+    null,                          // Default scoping
+    {
+     startLevel:           1,   // H1
+     depth:                3,   // H1 through H4
+     topLinks: true
+    }
+	);
 });

@@ -3,6 +3,12 @@ body {
   color:black;
   font-family:Lucida Grande,Verdana,Arial,Helvetica,sans-serif;
   font-size:90%;
+	width: auto;
+	margin: auto;
+	padding: 20px 300px 20px 40px;
+}
+h1, h2, h3, h4, h5 {
+  position: relative;
 }
 h1 {
   border-bottom: 1px solid #eee;
@@ -107,4 +113,49 @@ p.page-title {
 }
 table {
   font-size: 0.8em;
+}
+
+/*#toc {
+  float: right;
+  font-size: 10pt;
+  width: 200px;
+  padding: 10px 10px 10px 20px;
+  background: #efffb1;
+  border: solid 1px #ccd136;
+  margin: 0 0 10px 15px;
+}*/
+
+
+
+#toc {
+	position: fixed;
+	top: 20px;
+  background: none;
+	border: none;
+	right: 20px;
+	border-left: solid 5px #ddd;
+  width: 260px;
+/*  bottom: 20px;*/
+  height: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+}
+#toc li {
+  padding: 5px;
+}
+#toc a {
+  background: #efffb1;
+}
+a.toc-top-link {
+  -moz-background-clip:border;
+  -moz-background-inline-policy:continuous;
+  -moz-background-origin:padding;
+  background:#EEEEEE none repeat scroll 0 0;
+  font-size:8pt;
+  left:-40px;
+  padding:4px;
+  position:absolute;
+  text-align:center;
+  top:5px;
+  width:30px;
 }
