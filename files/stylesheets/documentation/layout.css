@@ -28,6 +28,9 @@ pre
   color: #111;
 /*  border: 1px solid #ddd;*/
 }
+pre.hidden {
+  cursor: pointer;
+}
 code, tt {
   overflow: auto;
   font-family: 'Bitstream Vera Sans Mono', Monaco, monospace, courier, 'courier new';
