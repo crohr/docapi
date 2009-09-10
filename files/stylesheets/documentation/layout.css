@@ -11,8 +11,11 @@ h1 {
   margin:0.8em 0 0.3em;
 }
 h2 {
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-family: 'Bitstream Vera Sans Mono', Monaco, monospace, courier, 'courier new';
+}
+h3 {
+  font-family: "Courier New";
 }
 pre
 {
@@ -75,11 +78,14 @@ p.page-title {
   font-weight: bold;
   font-size: 2em;
 }
-
-ol.methods {
-/*  list-style-type: none;*/
+.docapi-section {
+  margin-left: 15px;
 }
-ol.methods .synopsis {
+.docapi-subsection {
+  padding: 5px;
+  margin-bottom: 20px;
+}
+.docapi-subsection .docapi-title {
   padding: 3px 10px;
   font-size: 1.4em;
   background: #336699;
@@ -88,11 +94,10 @@ ol.methods .synopsis {
   font-weight: bold;
   font-family: "Courier New";
 }
-ol.methods li {
-  padding: 5px;
-  margin-bottom: 20px;
-}
-ol.methods li h2 {
+.docapi-subsection .docapi-subtitle {
+  font-size: 1.1em;
+  font-weight: bold;
+  font-family: 'Bitstream Vera Sans Mono', Monaco, monospace, courier, 'courier new';
   margin:20px 2px 5px 0px;
   border-left: 5px solid orange;
   padding-left: 5px;

@@ -21,47 +21,61 @@ class Docapi
     output_dir.mkpath
     output = File.open(output_dir+"index.html", "w+")
     output << header(:title => options[:title])
-    convert_directory(input_dir, output)
+    output << convert_directory(input_dir)
     output << footer
     output.close
     # copy stylesheets and javascripts files
     FileUtils.cp_r(File.join(File.dirname(__FILE__), "..", "files", "."), output_dir)
   end
   
-  def convert_directory(dir, output, level = 1)
+  def convert_directory(dir, level = 1)
+    output = []
     dir.entries.each do |entry|
       next if entry.to_s =~ /^\./
       path = dir+entry
+      title = entry.to_s.gsub(/\d+-/, "")
+      output << "<div id='#{title}' class='docapi-section'>"
       if path.directory?
-        output << "<h#{level}>#{entry.to_s.gsub(/\d+-/, "").capitalize}</h#{level}>"
-        convert_directory(path, output, level+1)
+        output << "<h#{level}>#{title.capitalize}</h#{level}>"
+        output << convert_directory(path, level+1)
       else
-        convert_file(path, output, level+1)
-      end
+        output << convert_file(path)
+      end  
+      output << '</div>'
+    end
+    output.flatten
+  end
+  
+  def convert_file(file)
+    case file.extname
+    when ".md"
+      Maruku.new( File.read(file) ).to_html
+    when ".rb"
+      process_file_sections(file, 'ruby', [/^=begin (.*)$/, /^=end$/])
+    when ".py"
+      process_file_sections(file, 'python', [/^''' (.*)$/, /^'''$/])
+    when ".html"
+      File.read(file)
     end
   end
   
-  def convert_file(file, output, level = 1)
-    case file.extname
-    when ".md"
-      output << Maruku.new( File.read(file) ).to_html
-    when ".rb"
-      blocks = []
-      File.open(file, "r").each do |line|
-        if line =~ /^=begin (.*)$/
-          output << write_block(blocks.pop)
-          blocks << {:content => "", :language => $1}
-        elsif line =~ /^=end$/
-          output << write_block(blocks.pop)
-        else
-          blocks << {:content => "", :language => "ruby"} if blocks.last.nil?
-          blocks.last[:content] << line
-        end
-      end  
-      output << write_block(blocks.pop)
-    when ".html"
-      output << File.read(file)
-    end
+  
+  def process_file_sections(file, language, regexps)
+    blocks = []
+    output = ["<div class='docapi-subsection'><div class='docapi-title'>#{File.basename(file).gsub(/^\d+-/, "")}</div>"]
+    File.open(file, "r").each do |line|
+      if line =~ regexps.first
+        output << write_block(blocks.pop)
+        blocks << {:content => "", :language => $1}
+      elsif line =~ regexps.last
+        output << write_block(blocks.pop)
+      else
+        blocks << {:content => "", :language => language} if blocks.last.nil?
+        blocks.last[:content] << line
+      end
+    end  
+    output << write_block(blocks.pop)
+    output << '</div>'
   end
   
   def write_block(block)
@@ -98,13 +112,11 @@ class Docapi
     methods = documentation.split("<h4>  method: ")
     methods.shift
     methods.map!{ |m| 
-      ["<li>", m.gsub(/<blockquote><pre>.*/m, "").gsub(/<a name="(.+?)">(.*?)<br \/>\s*?<\/a>/m, "<div class=\"synopsis\"><a name=\"\\1\">\\2<a></div>").gsub(/<pre>(.*?)<\/pre>/m, "<pre><code>\\1</code></pre>"), "</li>"].join("")
+      ["<div class='docapi-subsection'>", m.gsub(/<blockquote><pre>.*/m, "").gsub(/<a name="(.+?)">(.*?)<br \/>\s*?<\/a>/m, "<div class='docapi-title'><a name=\"\\1\">\\2<a></div>").gsub(/<h2>(.*?)<\/h2>/m, "<div class='docapi-subtitle'>\\1</div>").gsub(/<pre>(.*?)<\/pre>/m, "<pre><code>\\1</code></pre>"), "</div>"].join("")
     }.reverse!
 
     File.open(File.join(output_dir.realpath, "documentation.html"), "w+") do |f|
-      f << '<ol class="methods">'
       methods.each{ |method| f << method }
-      f << "</ol>"
     end
   end
   
@@ -123,6 +135,7 @@ class Docapi
   end
   def footer
     output = []
+    output << "<div id='generation-date'>Generated at: <span class='date'>#{Time.now.to_s}</span></div>"
     output << "</body></html>"
   end
   
