@@ -115,10 +115,11 @@ class Docapi
     methods.shift
     methods.map!{ |m| 
       ["<div class='docapi-subsection'>", m.gsub(/<blockquote><pre>.*/m, "").gsub(/<a name="(.+?)">(.*?)<br \/>\s*?<\/a>/m, "<div class='docapi-title'><a name=\"\\1\">\\2<a></div>").gsub(/<h2>(.*?)<\/h2>/m, "<div class='docapi-subtitle'>\\1</div>").gsub(/<pre>(.*?)<\/pre>/m, "<pre><code>\\1</code></pre>"), "</div>"].join("")
-    }.reverse!
+    }
 
     File.open(File.join(output_dir.realpath, "documentation.html"), "w+") do |f|
-      methods.each{ |method| f << method }
+      # sort methods by :call-seq: length ASC. A bit dirty but...
+      methods.sort_by{|m| method = m[/<div class='docapi-title'><a name=".*?">(.+?)<a><\/div>/, 1].length}.each{ |method| f << method }
     end
   end
   
