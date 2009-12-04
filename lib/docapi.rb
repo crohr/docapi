@@ -119,7 +119,7 @@ class Docapi
 
     File.open(File.join(output_dir.realpath, "documentation.html"), "w+") do |f|
       # sort methods by :call-seq: length ASC. A bit dirty but...
-      methods.sort_by{|m| method = m[/<div class='docapi-title'><a name=".*?">(.+?)<a><\/div>/, 1].length}.each{ |method| f << method }
+      methods.sort_by{|m| method = m[/<div class='docapi-title'><a name=".*?">(.+?)<a><\/div>/, 1].length rescue 0}.each{ |method| f << method }
     end
   end
   
