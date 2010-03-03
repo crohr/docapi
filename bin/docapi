@@ -34,13 +34,11 @@ option_parser.parse!
 
 @command =  ARGV.shift
 
-
-
 case @command
 when 'generate'
-  Docapi.new.generate(input = ARGV, output = @options.delete(:output), @options)
+  Docapi::CLI.new.generate(input = ARGV, output = @options.delete(:output), @options)
 when 'merge'
-  Docapi.new.merge(input = ARGV.shift, output = @options.delete(:output), @options)
+  Docapi::CLI.new.merge(input = ARGV.shift, output = @options.delete(:output), @options)
 else
   $stderr.puts option_parser.help  
   exit(-1)
