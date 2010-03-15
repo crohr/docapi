@@ -1,0 +1,19 @@
+
+namespace :test do
+  desc "Attempts to generate the list of methods"
+  task :generate do
+    $LOAD_PATH.unshift File.dirname(__FILE__)+'/../lib'
+    require 'docapi'
+    require 'rdoc/generator/docapi'
+    Docapi::CLI.new.generate(["code/reference_api.rb"], "doc/2-documentation")
+    # RDoc::RDoc.new.document(["-f", "docapi", "-U", "-q", "-o", "doc/2-documentation", "code/reference_api.rb"])
+  end
+  
+  desc "Attempts to merge"
+  task :merge => :generate do
+    $LOAD_PATH.unshift File.dirname(__FILE__)+'/../lib'
+    require 'docapi'
+    require 'rdoc/generator/docapi'
+    Docapi::CLI.new.merge("doc", "output", :title => "Reference API Documentation")
+  end
+end

@@ -49,12 +49,13 @@ module RDoc
         
         yaml = YAML.dump({
           "methods" => @output[:methods].map{|method|
+            next if method.visibility == :private
             {
               "name" => method.call_seq || method.name,
               "comment" => method.comment,
               "html_comment" => method.comment.nil? ? "" : h.convert(method.comment.gsub(/^#+ ?/, ''))
             }
-          }
+          }.compact
         })
         
         puts yaml unless @options.quiet

@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cyril Rohr"]
-  s.date = %q{2010-03-03}
+  s.date = %q{2010-03-15}
   s.default_executable = %q{docapi}
   s.description = %q{RDoc template for generating API documentation.}
   s.email = %q{cyril.rohr@gmail.com}
@@ -48,6 +48,7 @@ Gem::Specification.new do |s|
      "files/stylesheets/documentation/highlighter/zenburn.css",
      "files/stylesheets/documentation/layout.css",
      "lib/docapi.rb",
+     "lib/rdoc/generator/docapi.rb",
      "test/code/reference_api.rb",
      "test/doc/1-README.md",
      "test/doc/2-documentation/documentation.html",
@@ -68,12 +69,12 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<rdoc>, [">= 0"])
+      s.add_runtime_dependency(%q<rdoc>, [">= 2.0.0"])
     else
-      s.add_dependency(%q<rdoc>, [">= 0"])
+      s.add_dependency(%q<rdoc>, [">= 2.0.0"])
     end
   else
-    s.add_dependency(%q<rdoc>, [">= 0"])
+    s.add_dependency(%q<rdoc>, [">= 2.0.0"])
   end
 end
 

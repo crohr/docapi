@@ -1,74 +1,13 @@
-<ol class="methods"><li>
-
-<div class="synopsis"><a name="M000003">GET /:grid5000-resource[.:format]<a></div>
-
-
-
-
-<p>
-Get a specific version of a Grid5000 resource.
-</p>
-<h2>URI parameters</h2>
-<table>
-<tr><td valign="top"><tt>grid5000-resource</tt>:</td><td>the URI of the grid5000 resource.
-
-</td></tr>
-</table>
-<h2>Query parameters</h2>
-<table>
-<tr><td valign="top"><tt>version</tt>:</td><td>the requested version. It can be a version id (40 characters), or a UNIX
-timestamp [default=empty (most recent version is used)].
-
-</td></tr>
-<tr><td valign="top"><tt>depth</tt>:</td><td>the number of nested sub-resources to resolve [default=1].
-
-</td></tr>
-<tr><td valign="top"><tt>resolve</tt>:</td><td>a list of comma separated sub-resources names to resolve (to be used with
-the <tt>depth</tt> parameter) [default=all].
-
-</td></tr>
-</table>
-<h2>Content-Types</h2>
-<table>
-<tr><td valign="top"><tt>application/json</tt>:</td><td>JSON
-
-</td></tr>
-<tr><td valign="top"><tt>application/xml</tt>:</td><td>XML
-
-</td></tr>
-<tr><td valign="top"><tt>application/zip</tt>:</td><td>the ZIP format will return a zip archive containing the set of directories
-and files corresponding to the required data, with all its sub-resources.
-
-</td></tr>
-</table>
-<h2>Status codes</h2>
-<table>
-<tr><td valign="top"><tt>200</tt>:</td><td>OK, the response contains the description of the resource as it was at the
-requested version.
-
-</td></tr>
-<tr><td valign="top"><tt>404</tt>:</td><td>the requested grid5000 resource cannot be found, or the requested version
-does not exist.
-
-</td></tr>
-<tr><td valign="top"><tt>406</tt>:</td><td>Returns 406 if the requested format is not available.
-
-</td></tr>
-</table>
-
-
-
-</li><li>
-
-<div class="synopsis"><a name="M000001">GET /:grid5000-resource/versions[.:format]<a></div>
-
-
-
-
+<div class='docapi-subsection'>
+<div class='docapi-title'>
+<a name='GET-/:grid5000-resource/versions[.:format]'>GET /:grid5000-resource/versions[.:format]
+</a>
+</div>
+<div class='docapi-content'>
 <p>
 Get the list of all versions of a particular resource.
 </p>
-<h2>URI parameters</h2>
+<div class="docapi-subtitle">URI parameters</div>
 <table>
 <tr><td valign="top"><tt>grid5000-resource</tt>:</td><td>the URI of the grid5000 resource.
 
@@ -78,13 +17,13 @@ header in your HTTP request.
 
 </td></tr>
 </table>
-<h2>Query parameters</h2>
+<div class="docapi-subtitle">Query parameters</div>
 <table>
 <tr><td valign="top"><tt>limit</tt>:</td><td>maximum number of versions to return.
 
 </td></tr>
 </table>
-<h2>Content-Types</h2>
+<div class="docapi-subtitle">Content-Types</div>
 <table>
 <tr><td valign="top"><tt>application/json</tt>:</td><td>JSON
 
@@ -93,7 +32,7 @@ header in your HTTP request.
 
 </td></tr>
 </table>
-<h2>Status codes</h2>
+<div class="docapi-subtitle">Status codes</div>
 <table>
 <tr><td valign="top"><tt>200</tt>:</td><td>OK, the response contains the list of the versions of the requested
 grid5000 resource.
@@ -106,7 +45,7 @@ grid5000 resource.
 
 </td></tr>
 </table>
-<h2>Usage</h2>
+<div class="docapi-subtitle">Usage</div>
 <p>
 Get the 2 latest versions of the Rennes site:
 </p>
@@ -137,19 +76,18 @@ Get the 2 latest versions of the Rennes site:
     ]
 </code></pre>
 
-
-
-</li><li>
-
-<div class="synopsis"><a name="M000002">GET /:grid5000-resource/versions/:version[.:format]<a></div>
-
-
-
-
+</div>
+</div>
+<div class='docapi-subsection'>
+<div class='docapi-title'>
+<a name='GET-/:grid5000-resource/versions/:version[.:format]'>GET /:grid5000-resource/versions/:version[.:format]
+</a>
+</div>
+<div class='docapi-content'>
 <p>
 Get info about a specific version.
 </p>
-<h2>URI parameters</h2>
+<div class="docapi-subtitle">URI parameters</div>
 <table>
 <tr><td valign="top"><tt>grid5000-resource</tt>:</td><td>the URI of the grid5000 resource.
 
@@ -158,7 +96,7 @@ Get info about a specific version.
 
 </td></tr>
 </table>
-<h2>Content-Types</h2>
+<div class="docapi-subtitle">Content-Types</div>
 <table>
 <tr><td valign="top"><tt>application/json</tt>:</td><td>JSON
 
@@ -167,7 +105,7 @@ Get info about a specific version.
 
 </td></tr>
 </table>
-<h2>Status codes</h2>
+<div class="docapi-subtitle">Status codes</div>
 <table>
 <tr><td valign="top"><tt>200</tt>:</td><td>OK.
 
@@ -181,6 +119,64 @@ does not exist.
 </td></tr>
 </table>
 
+</div>
+</div>
+<div class='docapi-subsection'>
+<div class='docapi-title'>
+<a name='GET-/:grid5000-resource[.:format]'>GET /:grid5000-resource[.:format]
+</a>
+</div>
+<div class='docapi-content'>
+<p>
+Get a specific version of a Grid5000 resource.
+</p>
+<div class="docapi-subtitle">URI parameters</div>
+<table>
+<tr><td valign="top"><tt>grid5000-resource</tt>:</td><td>the URI of the grid5000 resource.
 
+</td></tr>
+</table>
+<div class="docapi-subtitle">Query parameters</div>
+<table>
+<tr><td valign="top"><tt>version</tt>:</td><td>the requested version. It can be a version id (40 characters), or a UNIX
+timestamp [default=empty (most recent version is used)].
 
-</li></ol>
+</td></tr>
+<tr><td valign="top"><tt>depth</tt>:</td><td>the number of nested sub-resources to resolve [default=1].
+
+</td></tr>
+<tr><td valign="top"><tt>resolve</tt>:</td><td>a list of comma separated sub-resources names to resolve (to be used with
+the <tt>depth</tt> parameter) [default=all].
+
+</td></tr>
+</table>
+<div class="docapi-subtitle">Content-Types</div>
+<table>
+<tr><td valign="top"><tt>application/json</tt>:</td><td>JSON
+
+</td></tr>
+<tr><td valign="top"><tt>application/xml</tt>:</td><td>XML
+
+</td></tr>
+<tr><td valign="top"><tt>application/zip</tt>:</td><td>the ZIP format will return a zip archive containing the set of directories
+and files corresponding to the required data, with all its sub-resources.
+
+</td></tr>
+</table>
+<div class="docapi-subtitle">Status codes</div>
+<table>
+<tr><td valign="top"><tt>200</tt>:</td><td>OK, the response contains the description of the resource as it was at the
+requested version.
+
+</td></tr>
+<tr><td valign="top"><tt>404</tt>:</td><td>the requested grid5000 resource cannot be found, or the requested version
+does not exist.
+
+</td></tr>
+<tr><td valign="top"><tt>406</tt>:</td><td>Returns 406 if the requested format is not available.
+
+</td></tr>
+</table>
+
+</div>
+</div>

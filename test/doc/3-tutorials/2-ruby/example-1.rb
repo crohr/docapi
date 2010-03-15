@@ -1,9 +1,11 @@
 =begin markdown
 Comment `code` is good.
 =end
-def x
+
+def method
   return "whatever"
 end
+
 =begin markdown
 Comment
 =end

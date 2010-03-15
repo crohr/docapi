@@ -1,16 +1,17 @@
 require 'yaml'
 require 'haml'
+require 'maruku'
 
 module Docapi
   class CLI
 
     TEMPLATE = <<TEMPLATE
 - methods.each do |method|
-  .subsection{:class => "docapi"}
-    .title
+  .docapi-subsection
+    .docapi-title
       %a{:name => method["name"].gsub(/\W/,' ').squeeze(' ').gsub(/\s/,'-')}= method["name"]
-    .content
-      = method["html_comment"].gsub(/<h2>(.*?)<\\/h2>/m, '<div class="subtitle">\\1</div>')
+    .docapi-content
+      = method["html_comment"].gsub(/<h2>(.*?)<\\/h2>/m, '<div class="docapi-subtitle">\\1</div>')
 TEMPLATE
 
     FILES_TO_INCLUDE = {
@@ -35,10 +36,10 @@ TEMPLATE
     def convert_directory(dir, level = 1)
       output = []
       dir.entries.each do |entry|
-        next if entry.to_s =~ /^\./
+        next if entry.to_s =~ /^\./ || entry.to_s == "created.rid"
         path = dir+entry
         title = File.basename(entry).gsub(/\d+-/, "").gsub(/\..+?$/, "")
-        output << "<div class='docapi section #{title.downcase}'>"
+        output << "<div class='docapi-section #{title.downcase}'>"
         if path.directory?
           output << "<h#{level}>#{title.capitalize}</h#{level}>"
           output << convert_directory(path, level+1)
@@ -68,7 +69,7 @@ TEMPLATE
     
     def process_file_sections(file, language, regexps)
       blocks = []
-      output = ["<div class='docapi subsection'><div class='title'>#{File.basename(file).gsub(/^\d+-/, "")}</div>"]
+      output = ["<div class='docapi-subsection'><div class='docapi-title'>#{File.basename(file).gsub(/^\d+-/, "")}</div>"]
       File.open(file, "r").each do |line|
         if line =~ regexps.first
           output << write_block(blocks.pop)
@@ -97,20 +98,18 @@ TEMPLATE
     
     def generate(input_paths, output_path, options = {})
       require 'rdoc/generator/docapi'
-      temporary_output_path = File.join(File.expand_path(File.dirname(__FILE__)), "tmp", "doc")
+      require 'tmpdir'
+      temporary_output_path = File.join(Dir.tmpdir, "docapi")
       rdoc_options = %w{-f docapi --charset=UTF-8 -U --quiet -o}
       rdoc_options << temporary_output_path
       rdoc_options.concat input_paths
       output_dir = Pathname.new(output_path || Pathname.getwd+"documentation")
       raise ArgumentError, "Output directory '#{output_dir}' does not exist" unless output_dir.directory?
       RDoc::RDoc.new.document(rdoc_options)
-      documentation = YAML.load_file File.join(temporary_output_path, "index.yaml")
-      html = Haml::Engine.new(TEMPLATE).render(Object.new, :methods => documentation["methods"], :options => options)  
-  
+      documentation = YAML.load_file(File.join(temporary_output_path, "index.yaml"))
+      html = Haml::Engine.new(TEMPLATE, :ugly => true).render(Object.new, :methods => documentation["methods"], :options => options)  
       File.open(File.join(output_dir.realpath, "documentation.html"), "w+") do |f|
-        # sort methods by :call-seq: length ASC. A bit dirty but...
-        f << html
-        # methods.sort_by{|m| method = m[/<div class='docapi-title'><a name=".*?">(.+?)<a><\/div>/, 1].length rescue 0}.each{ |method| f << method }
+        f << html.gsub(/<pre>(.*?)<\/pre>/im, '<pre><code>\1</code></pre>')
       end
     end
     
