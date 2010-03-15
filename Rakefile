@@ -11,6 +11,8 @@ begin
     gem.homepage = "http://github.com/crohr/docapi"
     gem.authors = ["Cyril Rohr"]
     gem.add_dependency "rdoc", ">= 2.0.0"
+    gem.add_dependency "haml"
+    gem.add_dependency "maruku"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 
