@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{docapi}
-  s.version = "0.1.5"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Cyril Rohr"]
@@ -49,6 +49,7 @@ Gem::Specification.new do |s|
      "files/stylesheets/documentation/layout.css",
      "lib/docapi.rb",
      "lib/rdoc/generator/docapi.rb",
+     "test/Rakefile",
      "test/code/reference_api.rb",
      "test/doc/1-README.md",
      "test/doc/2-documentation/documentation.html",
