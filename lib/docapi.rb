@@ -116,7 +116,7 @@ TEMPLATE
     
     def header(options = {})
       output = []
-      output << "<html><head><title>#{options[:title] || "Documentation"}</title>"
+      output << "<html><head><meta http-equiv=\"content-type\" content=\"text/html;charset=utf-8\"><title>#{options[:title] || "Documentation"}</title>"
       FILES_TO_INCLUDE[:javascripts].each do |file|
         output << '<script type="text/javascript" src="'+file+'"></script>'
       end
