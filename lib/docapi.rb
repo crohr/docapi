@@ -25,9 +25,9 @@ TEMPLATE
       output_dir = Pathname.new(output_path || Pathname.getwd+"generated-doc")
       output_dir.mkpath
       output = File.open(output_dir+"index.html", "w+")
-      output << header(:title => options[:title])
-      output << convert_directory(input_dir)
-      output << footer
+      output << header(:title => options[:title]).join("")
+      output << convert_directory(input_dir).join("")
+      output << footer.join("")
       output.close
       # copy stylesheets and javascripts files
       FileUtils.cp_r(File.join(File.dirname(__FILE__), "..", "files", "."), output_dir)
