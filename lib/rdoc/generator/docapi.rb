@@ -53,7 +53,7 @@ module RDoc
             {
               "name" => method.call_seq || method.name,
               "comment" => method.comment,
-              "html_comment" => method.comment.nil? ? "" : h.convert(method.comment.gsub(/^#+ ?/, ''))
+              "html_comment" => method.comment.nil? ? "" : h.convert(method.comment.text.gsub(/^#+ ?/, ''))
             }
           }.compact
         })
