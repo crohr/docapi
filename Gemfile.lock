@@ -1,0 +1,29 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    haml (4.0.3)
+      tilt
+    json (1.8.0)
+    maruku (0.6.1)
+      syntax (>= 1.0.0)
+    multi_json (1.7.7)
+    rake (10.1.0)
+    rdoc (3.12.2)
+      json (~> 1.4)
+    simplecov (0.7.1)
+      multi_json (~> 1.0)
+      simplecov-html (~> 0.7.1)
+    simplecov-html (0.7.1)
+    syntax (1.0.0)
+    tilt (1.4.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler
+  haml
+  maruku
+  rake
+  rdoc (~> 3.12.2)
+  simplecov
